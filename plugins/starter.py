@@ -21,6 +21,8 @@ p_bot_hi = re.compile("aerolito[\s]*hi")
 p_bot_joke = re.compile("aerolito[\s]*joke")
 p_bot_attach = re.compile("aerolito[\s]*attachment")
 p_bot_help = re.compile("aerolito[\s]*help")
+p_bot_he = re.compile("aerolito[\s]*tem horaextra")
+
 
 def process_message(data):
     logging.debug("process_message:data: {}".format(data))
@@ -40,8 +42,14 @@ def process_message(data):
     elif p_bot_help.match(data['text']):
         outputs.append([data['channel'], "{}".format(help_text)])
 
-    elif data['text'].startswith("pybot"):
+    elif data['text'].startswith("aerolito"):
         outputs.append([data['channel'], "I'm sorry, I don't know how to: `{}`".format(data['text'])])
+
+    elif p_bot_he.match(data['text']):
+        outputs.append([data['channel'], "Tem toda segunda..."])
+        outputs.append([data['channel'], "__typing__", 5])
+        outputs.append([data['channel'], "Tem toda terca, quarta, todos os dias que o pessoal se juntar e beber."])
+        outputs.append([data['channel'], "Mais informações vai no site"])
 
     elif data['channel'].startswith("D"):  # direct message channel to the bot
         outputs.append([data['channel'], "Hello, I'm the BeepBoop python starter bot.\n{}".format(help_text)])
