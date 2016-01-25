@@ -25,6 +25,7 @@ class RtmBot(object):
         self.token = token
         self.bot_plugins = []
         self.slack_client = None
+
     def connect(self):
         """Convenience method that creates Server instance"""
         self.slack_client = SlackClient(self.token)
@@ -33,6 +34,7 @@ class RtmBot(object):
             self.slack_client.server.username,
             self.slack_client.server.login_data['team']['name'],
             self.slack_client.server.domain))
+
     def start(self):
         self.connect()
         self.load_plugins()
@@ -43,18 +45,21 @@ class RtmBot(object):
             self.output()
             self.autoping()
             time.sleep(.1)
+
     def autoping(self):
         #hardcode the interval to 60 seconds
         now = int(time.time())
         if now > self.last_ping + 60:
             self.slack_client.server.ping()
             self.last_ping = now
+
     def isBotMention(self, message):
         botUserName = self.slack_client.server.login_data['self']['id']
         if re.search("@{}".format(botUserName), message):
             return True
         else:
             return False
+
     def input(self, data):
         # Make sure we're not responding to ourselves
         if "user" in data and data['user'] != self.slack_client.server.login_data['self']['id']:
@@ -66,6 +71,7 @@ class RtmBot(object):
                 for plugin in self.bot_plugins:
                     plugin.register_jobs()
                     plugin.do(function_name, data)
+
     def output(self):
         for plugin in self.bot_plugins:
             limiter = False
@@ -98,9 +104,11 @@ class RtmBot(object):
                         attachments=attachments_json,
                     )
                     logging.debug(resp)
+
     def crons(self):
         for plugin in self.bot_plugins:
             plugin.do_jobs()
+
     def load_plugins(self):
         for plugin in glob.glob(directory+'/plugins/*'):
             sys.path.insert(0, plugin)
@@ -122,6 +130,7 @@ class Plugin(object):
         self.outputs = []
         if 'setup' in dir(self.module):
             self.module.setup()
+
     def register_jobs(self):
         if 'crontable' in dir(self.module):
             for interval, function in self.module.crontable:
@@ -130,6 +139,7 @@ class Plugin(object):
             self.module.crontable = []
         else:
             self.module.crontable = []
+
     def do(self, function_name, data):
         if function_name in dir(self.module):
             #this makes the plugin fail with stack trace in debug mode
@@ -145,9 +155,11 @@ class Plugin(object):
                 self.module.catch_all(data)
             except:
                 dbg("problem in catch all")
+
     def do_jobs(self):
         for job in self.jobs:
             job.check()
+
     def do_output(self):
         output = []
         while True:
@@ -160,6 +172,7 @@ class Plugin(object):
             else:
                 self.module.outputs = []
         return output
+
     def do_attachment(self):
         attachment = []
         while True:
@@ -174,14 +187,18 @@ class Plugin(object):
         return attachment
 
 class Job(object):
+
     def __init__(self, interval, function):
         self.function = function
         self.interval = interval
         self.lastrun = 0
+
     def __str__(self):
         return "{} {} {}".format(self.function, self.interval, self.lastrun)
+
     def __repr__(self):
         return self.__str__()
+
     def check(self):
         if self.lastrun + self.interval < time.time():
             if not debug:
