@@ -21,7 +21,7 @@ p_bot_hi = re.compile("aerolito[\s]*hi")
 p_bot_joke = re.compile("aerolito[\s]*joke")
 p_bot_attach = re.compile("aerolito[\s]*attachment")
 p_bot_help = re.compile("aerolito[\s]*help")
-p_bot_he = re.compile("aerolito[\s]*tem horaextra")
+p_bot_he = re.compile("aerolito[\s]*tem horaextra[\s]*?")
 
 
 def process_message(data):
