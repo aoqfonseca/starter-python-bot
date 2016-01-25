@@ -42,14 +42,14 @@ def process_message(data):
     elif p_bot_help.match(data['text']):
         outputs.append([data['channel'], "{}".format(help_text)])
 
-    elif data['text'].startswith("aerolito"):
-        outputs.append([data['channel'], "I'm sorry, I don't know how to: `{}`".format(data['text'])])
-
     elif p_bot_he.match(data['text']):
         outputs.append([data['channel'], "Tem toda segunda..."])
         outputs.append([data['channel'], "__typing__", 5])
         outputs.append([data['channel'], "Tem toda terca, quarta, todos os dias que o pessoal se juntar e beber."])
         outputs.append([data['channel'], "Mais informações vai no site"])
+
+    elif data['text'].startswith("aerolito"):
+        outputs.append([data['channel'], "I'm sorry, I don't know how to: `{}`".format(data['text'])])
 
     elif data['channel'].startswith("D"):  # direct message channel to the bot
         outputs.append([data['channel'], "Hello, I'm the BeepBoop python starter bot.\n{}".format(help_text)])
