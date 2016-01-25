@@ -17,10 +17,10 @@ help_text = "{}\n{}\n{}\n{}\n{}\n{}".format(
     "`pybot help` to see this again.")
 
 # regular expression patterns for string matching
-p_bot_hi = re.compile("pybot[\s]*hi")
-p_bot_joke = re.compile("pybot[\s]*joke")
-p_bot_attach = re.compile("pybot[\s]*attachment")
-p_bot_help = re.compile("pybot[\s]*help")
+p_bot_hi = re.compile("aerolito[\s]*hi")
+p_bot_joke = re.compile("aerolito[\s]*joke")
+p_bot_attach = re.compile("aerolito[\s]*attachment")
+p_bot_help = re.compile("aerolito[\s]*help")
 
 def process_message(data):
     logging.debug("process_message:data: {}".format(data))
