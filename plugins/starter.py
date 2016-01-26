@@ -10,11 +10,12 @@ typing_sleep = 0
 greetings = ['Hi friend!', 'Hello there.', 'Howdy!', 'Wazzzup!!!', 'Hi!', 'Hey.']
 help_text = "{}\n{}\n{}\n{}\n{}\n{}".format(
     "I will respond to the following messages: ",
-    "`pybot hi` for a random greeting.",
-    "`pybot joke` for a question, typing indicator, then answer style joke.",
-    "`pybot attachment` to see a Slack attachment message.",
+    "`aerolito hi` for a random greeting.",
+    "`aerolito joke` for a question, typing indicator, then answer style joke.",
+    "`aerolito tem horaextra?` Tell when happening horaextra events.",
+    "`aerolito attachment` to see a Slack attachment message.",
     "`@<your bot's name>` to demonstrate detecting a mention.",
-    "`pybot help` to see this again.")
+    "`aerolito help` to see this again.")
 
 # regular expression patterns for string matching
 p_bot_hi = re.compile("aerolito[\s]*hi")
